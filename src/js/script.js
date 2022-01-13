@@ -33,20 +33,20 @@
     },
   };
 
-  const classNames = {
+  /* const classNames = {
     menuProduct: {
       wrapperActive: 'active',
       imageVisible: 'active',
     },
-  };
+  }; */
 
-  const settings = {
+  /*const settings = {
     amountWidget: {
       defaultValue: 1,
       defaultMin: 1,
       defaultMax: 9,
     }
-  };
+  };*/
 
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
@@ -62,7 +62,6 @@
       thisProduct.renderInMenu();
 
       thisProduct.getElements();
-      console.log('thisProduct.getElement', thisProduct);
 
       thisProduct.initAccordion();
 
@@ -149,19 +148,18 @@
         thisProduct.processOrder();
       });
       
-      console.log('initOrderForm', thisProduct);
     }
 
     processOrder(){
+    
       const thisProduct = this;
-      console.log('processOrder', thisProduct);
 
       // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
 
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData', formData);
       
       // set price to default price
+      
       let price = thisProduct.data.price;
 
       // for every category (param)...
@@ -171,7 +169,6 @@
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
     
         const param = thisProduct.data.params[paramId];
-        console.log(paramId, param);
 
         // for every option in this category
 
@@ -180,18 +177,23 @@
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
       
           const option = param.options[optionId];
-          console.log(optionId, option);
 
-              
-        }
+          if (formData[paramId] && formData[paramId].includes(optionId)) {
+            if (!option.default == true) {
+              price += option.price;
+            } else if (option.default == true) {
+              price -= option.price;
+            }
+          }
+        } 
+        // update calculated price in the HTML
+         
+        thisProduct.priceElem.innerHTML = price;
       }
-
-      // update calculated price in the HTML
-      thisProduct.priceElem.innerHTML = price;
+      
     }
 
   }
-  
 
   const app = {
     initData: function(){
@@ -202,7 +204,6 @@
 
     initMenu: function(){
       const thisApp = this;
-      console.log('thisApp.data:', thisApp.data);
 
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
@@ -211,11 +212,6 @@
 
     init: function(){
       const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
 
       thisApp.initData();
       thisApp.initMenu();
