@@ -33,12 +33,12 @@
     },
   };
 
-  /* const classNames = {
+  const classNames = {
     menuProduct: {
       wrapperActive: 'active',
       imageVisible: 'active',
     },
-  }; */
+  }; 
 
   /*const settings = {
     amountWidget: {
@@ -186,13 +186,13 @@
 
           if (optionImage) {
             if (optionSelected) {
-              optionImage.classList.add('active');
+              optionImage.classList.add(classNames.menuProduct.imageVisible);
               if (!option.default == true) {
                 price += option.price;
               } 
             } else if (option.default == true) {
               price -= option.price;
-              optionImage.classList.remove('active');
+              optionImage.classList.remove(classNames.menuProduct.imageVisible);
             } 
           }
         } 
