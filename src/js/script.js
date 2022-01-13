@@ -180,14 +180,21 @@
       
           const option = param.options[optionId];
 
-          if (formData[paramId] && formData[paramId].includes(optionId)) {
-            if (!option.default == true) {
-              price += option.price;
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+          const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
+          console.log('optionImage', optionImage);
+
+          if (optionImage) {
+            if (optionSelected) {
+              optionImage.classList.add('active');
+              if (!option.default == true) {
+                price += option.price;
+              } 
+            } else if (option.default == true) {
+              price -= option.price;
+              optionImage.classList.remove('active');
             } 
-          } else if (option.default == true) {
-            price -= option.price;
           }
-          
         } 
         // update calculated price in the HTML
          
