@@ -219,6 +219,8 @@
     constructor(element){
       const thisWidget = this;
 
+      thisWidget.value = settings.amountWidget.defaultValue;
+
       thisWidget.getElements(element);
       thisWidget.setValue(thisWidget.input.value);
 
