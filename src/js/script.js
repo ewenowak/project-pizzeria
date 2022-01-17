@@ -231,8 +231,9 @@
           } 
         }
       }
-      
+
       price *= thisProduct.amountWidget.value;
+      thisProduct.priceSingle = price / thisProduct.amountWidget.value;
       thisProduct.dom.priceElem.innerHTML = price;
     }
 
@@ -249,7 +250,7 @@
     addToCart(){
       const thisProduct = this;
 
-      app.cart.add(thisProduct);
+      app.cart.add(thisProduct.prepareCartProduct());
     }
 
     prepareCartProduct(){
@@ -258,11 +259,58 @@
       const productSummary = {
         id: thisProduct.id,
         name: thisProduct.data.name,
-        amount: thisProduct.amountWidget.value
+        amount: thisProduct.amountWidget.value,
+        priceSingle: thisProduct.priceSingle,
+        price: thisProduct.amountWidget.value * thisProduct.priceSingle,
+        params: thisProduct.prepareCartProductParams()
       };
-      console.log('productSummary', productSummary);
+      return productSummary;
+    }
 
+    prepareCartProductParams(){
+      const thisProduct = this;
 
+      // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
+
+      const formData = utils.serializeFormToObject(thisProduct.dom.form);
+
+      //determine new empty object params
+
+      const params = {};
+
+      // for every category (param)...
+
+      for(let paramId in thisProduct.data.params) {
+    
+        // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
+    
+        const param = thisProduct.data.params[paramId];
+
+        // determine object params[paramId] with label and options value
+
+        params[paramId] = {
+          label: param.label,
+          options: {}
+        };
+
+        // for every option in this category
+
+        for(let optionId in param.options) {
+      
+          // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
+      
+          const option = param.options[optionId];
+
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+
+          //add option.label to params.options if option is Selected
+
+          if(optionSelected){
+            params[paramId].options[optionId] = option.label;
+          }
+        }
+      }
+      return params; 
     }
   }
 
@@ -337,8 +385,6 @@
       thisCart.getElements(element);
 
       thisCart.initActions();
-
-      console.log('newCart', thisCart);
     }
 
     getElements(element){
@@ -349,6 +395,8 @@
       thisCart.dom.wrapper = element;
 
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
       
     }
 
@@ -362,9 +410,20 @@
     }
 
     add(menuProduct){
-      //const thisCart = this;
+      
+      const thisCart = this;
+      
+      /* generate HTML based on template */
 
-      console.log('adding product',menuProduct);
+      const generatedHTML = templates.cartProduct(menuProduct);
+      
+      /* generated DOM */
+
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+      
+      /* add product to Cart */
+      
+      thisCart.dom.productList.appendChild(generatedDOM);
     }
   }
 
@@ -395,7 +454,7 @@
 
       const cartElem = document.querySelector(select.containerOf.cart);
       thisApp.cart = new Cart(cartElem);
-    }
+    },
   };
 
   app.init();
