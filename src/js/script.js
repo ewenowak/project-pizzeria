@@ -227,12 +227,11 @@
               optionImage.classList.add(classNames.menuProduct.imageVisible);
             } 
           } else if(optionImage) {
-              optionImage.classList.remove(classNames.menuProduct.imageVisible);
-            }
-          
-        // update calculated price in the HTML
+            optionImage.classList.remove(classNames.menuProduct.imageVisible);
+          } 
         }
       }
+      
       price *= thisProduct.amountWidget.value;
       thisProduct.dom.priceElem.innerHTML = price;
     }
