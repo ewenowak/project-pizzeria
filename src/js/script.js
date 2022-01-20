@@ -438,8 +438,9 @@
         thisCart.remove(event.detail.cartProduct);
       });
 
-      thisCart.dom.form.addEventListener('submit', function(){
+      thisCart.dom.form.addEventListener('submit', function(event){
         event.preventDefault();
+        thisCart.sendOrder();
       });
     }
 
@@ -481,12 +482,13 @@
         console.log('totalNumber', thisCart.totalNumber);
 
         thisCart.subtotalPrice = thisCart.subtotalPrice + thisCart.product.price;
-        thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
-        console.log('subtotalPrice', thisCart.subtotalPrice);
       }
 
+      thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
+      console.log('subtotalPrice', thisCart.subtotalPrice);
+
       if (thisCart.totalNumber == 0){
-        thisCart.totalPrice == 0;
+        thisCart.totalPrice = 0;
       } else {
         thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
       }
@@ -600,6 +602,8 @@
         console.log('wykonałem remove', thisCartProduct.remove);
       });
     }
+
+    
 
   }
 
