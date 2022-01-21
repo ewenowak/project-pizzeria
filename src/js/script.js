@@ -518,7 +518,7 @@
     sendOrder(){
       const thisCart = this;
 
-      // const url = settings.db.url + '/' + settings.db.orders;
+      const url = settings.db.url + '/' + settings.db.orders;
 
       const payload = {
         
@@ -530,9 +530,20 @@
         products: []
       };
       console.log('payload', payload);
+      
+      for(let prod of thisCart.products) {
+        payload.products.push(prod.getData());
+      }
+      
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': ' application/json',
+        },
+        body: JSON.stringify(payload)
+      };
+      fetch(url, options);
     }
-    
-
   }
 
   class CartProduct {
@@ -603,6 +614,20 @@
       });
     }
 
+    getData(){
+      const thisCartProduct = this;
+      
+      const orderProduct = {
+        id: thisCartProduct.id,
+        amount: thisCartProduct.amount,
+        price: thisCartProduct.price,
+        priceSingle: thisCartProduct.priceSingle,
+        name: thisCartProduct.name,
+        params: thisCartProduct.params,
+      };
+
+      console.log('orderProduct', orderProduct);
+    }
     
 
   }
