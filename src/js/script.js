@@ -388,7 +388,6 @@
       const thisCart = this;
       
       thisCart.products = [];
-      console.log(thisCart.products);
 
       thisCart.getElements(element);
 
@@ -469,23 +468,19 @@
       const thisCart = this;
 
       thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
-      console.log('deliveryFee', thisCart.deliveryFee);
 
       thisCart.totalNumber = 0;
       thisCart.subtotalPrice = 0;
 
       for (thisCart.product of thisCart.products) {
-        console.log('thisCart.product', thisCart.product);
         
         thisCart.totalNumber = thisCart.totalNumber + thisCart.product.amount;
         thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
-        console.log('totalNumber', thisCart.totalNumber);
 
         thisCart.subtotalPrice = thisCart.subtotalPrice + thisCart.product.price;
       }
 
       thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
-      console.log('subtotalPrice', thisCart.subtotalPrice);
 
       if (thisCart.totalNumber == 0){
         thisCart.totalPrice = 0;
@@ -498,17 +493,14 @@
       }
       
       thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
-      console.log('totalPrice', thisCart.totalPrice);
     }
 
     remove(cartProduct){
       const thisCart = this;
 
       const indexOfRemoveProduct = thisCart.products.indexOf(cartProduct);
-      console.log('indexOfRemoveProduct', indexOfRemoveProduct);
 
       thisCart.products.splice(indexOfRemoveProduct, 1);
-      console.log('thisCart.products', thisCart.products);
 
       cartProduct.dom.wrapper.remove();
 
@@ -529,7 +521,6 @@
         deliveryFee: thisCart.deliveryFee,
         products: []
       };
-      console.log('payload', payload);
       
       for(let prod of thisCart.products) {
         payload.products.push(prod.getData());
@@ -610,7 +601,6 @@
       thisCartProduct.dom.remove.addEventListener('click', function(event){
         event.preventDefault();
         thisCartProduct.remove();
-        console.log('wykonałem remove', thisCartProduct.remove);
       });
     }
 
@@ -625,8 +615,7 @@
         name: thisCartProduct.name,
         params: thisCartProduct.params,
       };
-
-      console.log('orderProduct', orderProduct);
+      return orderProduct; 
     }
     
 
@@ -646,16 +635,11 @@
           return rawResponse.json();
         })
         .then(function(parsedResponse){
-          console.log('parsedResponse', parsedResponse);
-          
+
           thisApp.data.products = parsedResponse;
 
           thisApp.initMenu();
         });
-
-      
-      
-      console.log('thisApp.data', JSON.stringify(thisApp.data));
     },
 
     initMenu: function(){
