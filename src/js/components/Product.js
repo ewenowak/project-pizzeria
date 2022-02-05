@@ -29,12 +29,10 @@ class Product{
     /* generate HTML based on template */
 
     const generatedHTML = templates.menuProduct(thisProduct.data);
-    console.log('generatedHTML', generatedHTML);
       
     /* create element using utils.createElementFromHTML */
 
     thisProduct.element = utils.createDOMFromHTML(generatedHTML);
-    console.log('thisProduct.element', thisProduct.element);
       
     /* find menu container */
       
@@ -181,7 +179,7 @@ class Product{
     const event = new CustomEvent('add-to-cart',{
       bubbles: true,
       detail: {
-        product: thisProduct, 
+        product: thisProduct.prepareCartProduct(), 
       } 
     });
 
