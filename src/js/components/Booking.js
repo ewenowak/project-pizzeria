@@ -239,20 +239,18 @@ class Booking{
       thisBooking.sendBooking();
       console.log('kliknąłem submit');
     });
-    
   }
 
   sendBooking(){
     const thisBooking = this;
     const url = settings.db.url + '/' + settings.db.bookings;
     
-   
-   
+    
     const payload = {
         
       date: thisBooking.datePickerWidget.value,
       hour: thisBooking.hourPickerWidget.value,
-      table: thisBooking.selectedTable[0],
+      table: (!(thisBooking.selectedTable == 0) ? parseInt(thisBooking.selectedTable[0], 10) : null),
       duration: thisBooking.hoursAmountWidget.value,
       ppl: thisBooking.peopleAmountWidget.value,
       starters: [],
@@ -277,9 +275,6 @@ class Booking{
       body: JSON.stringify(payload)
     };
     fetch(url, options);
-  
   }
-
-
 }
 export default Booking;
