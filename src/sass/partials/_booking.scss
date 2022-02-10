@@ -154,13 +154,12 @@
       &::after {
         border-radius: 50%;
       }
-
     }
 
-    &.selected{
+    &.selected {
       background: #55efc4;
       opacity: 0.5;
-  }
+    }
 
     &.booked {
       cursor: not-allowed;
@@ -176,7 +175,6 @@
         background: $color-dark;
         opacity: 0.4;
       }
-
     }
   }
 
