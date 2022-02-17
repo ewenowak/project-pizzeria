@@ -20,16 +20,6 @@ class Home{
     thisHome.dom.wrapper = element;
     thisHome.dom.wrapper.innerHTML = generatedHTML;
     thisHome.dom.carousel = thisHome.dom.wrapper.querySelector(select.home.carousel);
-    /*thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount);
-    thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
-    thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
-    thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
-    thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
-    thisBooking.dom.tablesWrapper = thisBooking.dom.wrapper.querySelector(select.containerOf.tables);
-    thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
-    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
-    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
-    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address); */
   }
 
   activatePage(pageId){
@@ -59,12 +49,6 @@ class Home{
     thisHome.links = document.querySelectorAll('.link');
 
     for(let link of thisHome.links){
-
-      /* I WANNA TALK ABOUT THIS PART DURING OUR MEETING 
-      link.addEventListener('mouseenter', function(event){
-        event.preventDefault();
-        link.classList.toggle(classNames.home.active);
-      });*/
       link.addEventListener('click', function(event){
         event.preventDefault();
         const clickedElement = this;

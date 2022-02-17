@@ -22,6 +22,7 @@
   border-radius: $radius;
   height: 120px;
 }
+  
 
 .box h2 {
   font-size: 26px;
@@ -123,8 +124,9 @@
   color: $color-light;
   position: absolute;
   font-size: 20px;
-  left: 30%;
-  top: 30%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   visibility: hidden;
 }
 
